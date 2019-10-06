@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ItemRow: View {
     let item : MenuItem
-    
+
     
     static let colors : [String : Color] = ["D": .purple, "G": .black, "N": .red, "S": .blue, "V": .green]
     
@@ -26,7 +26,7 @@ struct ItemRow: View {
                         Text(item.name)
                             .font(.headline)
                             
-                        Text(String("$\(item.price)")).font(.caption)
+                        Text(String(item.numberFormatted())).font(.caption)
 
                         }.layoutPriority(1)
                     Spacer()

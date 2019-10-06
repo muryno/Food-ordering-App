@@ -29,6 +29,18 @@ struct MenuItem: Codable, Equatable , Identifiable{
     var thumbnailImage: String {
         "\(mainImage)-thumb"
     }
+    
+    func numberFormatted()->String{
+       let currencyFormatter = NumberFormatter()
+        currencyFormatter.usesGroupingSeparator = true
+        currencyFormatter.numberStyle = .currency
+        // localize to your grouping and decimal separator
+        currencyFormatter.locale = Locale.current
+
+        // We'll force unwrap with the !, if you've got defined data you may need more error checking
+        let priceString = currencyFormatter.string(from: NSNumber(value: price)) ??  ""
+        return priceString
+    }
 
     #if DEBUG
     static let example = MenuItem(id: UUID(), name: "Maple French Toast", photoCredit: "Joseph Gonzalez", price: 6, restrictions: ["G", "V"], description: "Sweet, fluffy, and served piping hot, our French toast is flown in fresh every day from Maple City, Canada, which is where all maple syrup in the world comes from. And if you believe that, we have some land to sell you…")

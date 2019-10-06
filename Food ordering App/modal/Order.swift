@@ -21,6 +21,7 @@ class Order : ObservableObject {
 
     func add(item: MenuItem) {
         items.append(item)
+        //
     }
 
     func remove(item: MenuItem) {
@@ -28,4 +29,6 @@ class Order : ObservableObject {
             items.remove(at: index)
         }
     }
+    
+
 }
