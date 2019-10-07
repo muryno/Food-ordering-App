@@ -11,6 +11,7 @@ import SwiftUI
 struct OrderView: View {
     @EnvironmentObject var order : Order
     @State private var userName: String = ""
+    var utils = Utils()
 
     var body: some View {
 
@@ -21,12 +22,12 @@ struct OrderView: View {
                         HStack{
                             Text(items.name)
                             Spacer()
-                            Text(String(items.numberFormatted()))
+                            Text(self.utils.getCurrency(price : self.order.total))
                         }
                     }
                 }
                 Section {
-                    NavigationLink(destination: Text("Check out")) {
+                    NavigationLink(destination: CheckoutView()) {
                         Text("Place Order")
                     }
                     
@@ -54,9 +55,10 @@ struct OrderView: View {
                 
 //                TextField($userName, placeholder: Text("type here"))
 
-            }
-        }.navigationBarTitle("Order")
+            }.navigationBarTitle(Text("Order"), displayMode: .inline)
             .listStyle(GroupedListStyle())
+        }
+
     }
 }
 
