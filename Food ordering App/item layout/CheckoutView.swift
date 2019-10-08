@@ -13,7 +13,15 @@ struct CheckoutView: View {
     static let paymentTypes = ["Cash","Pos","Pay-stack", "Interswift"]
     @State private var paymentType = 0
     
+    @State var confirmAmount = false
      var utils = Utils()
+    
+    var prices : Int{
+        let price = Double(order.total)
+        let cummulator = (price/100) * Double(Self.tipAmounts[tipAmount])
+        let total = price + cummulator
+        return Int(total)
+    }
 
     @State private var addLoyaltyDetails = false
     @State private var loyaltyNumber = ""
@@ -54,16 +62,22 @@ struct CheckoutView: View {
             }
 
             Section(header:
-                Text("TOTAL: \(  utils.getCurrency(price : order.total) )")
+                Text("TOTAL: \(  utils.getCurrency(price : prices) )")
+                    .font(.largeTitle)
             ) {
                 Button("Confirm order") {
-                    // place the order
+                    self.confirmAmount.toggle()
                   
                 }
             }
             
         }.navigationBarTitle(Text("Payment"), displayMode: .inline)
+            .alert(isPresented: $confirmAmount) { () -> Alert in
+                Alert(title: Text("Order confirmed"), message: Text("Your total was \(utils.getCurrency(price : prices)) – thank you!"), dismissButton: .default(Text("Ok")))
+        }
 
+        
+       
         
     }
 }

@@ -24,15 +24,38 @@ struct OrderView: View {
                             Spacer()
                             Text(self.utils.getCurrency(price : self.order.total))
                         }
-                    }
+                    }.onDelete(perform: deleteItem)
                 }
                 Section {
                     NavigationLink(destination: CheckoutView()) {
                         Text("Place Order")
                     }
                     
-                }
+                }.disabled(order.items.isEmpty)
                 
+
+
+            }.navigationBarTitle(Text("Order"), displayMode: .inline)
+            .listStyle(GroupedListStyle())
+            .navigationBarItems(trailing:  EditButton())
+            //to edit item
+            //SwiftUI already knows that an edit button should toggle the table between editing and non-editing mode, while also changing title between Edit and Done – another example of us getting the system default behavior for free.
+        }
+
+    }
+    
+    func deleteItem(at ofset : IndexSet){
+        order.items.remove(atOffsets: ofset)
+    }
+}
+
+struct OrderView_Previews: PreviewProvider {
+    static var order = Order()
+    static var previews: some View {
+        OrderView()
+        .environmentObject(order)
+    }
+}
 //                ZStack {
 //                    VStack{
 //                        Rectangle()
@@ -54,18 +77,3 @@ struct OrderView: View {
 //                }
                 
 //                TextField($userName, placeholder: Text("type here"))
-
-            }.navigationBarTitle(Text("Order"), displayMode: .inline)
-            .listStyle(GroupedListStyle())
-        }
-
-    }
-}
-
-struct OrderView_Previews: PreviewProvider {
-    static var order = Order()
-    static var previews: some View {
-        OrderView()
-        .environmentObject(order)
-    }
-}

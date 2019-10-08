@@ -26,8 +26,9 @@ struct ItemDetails: View {
                 .offset(x: -5, y: -5)
             }
             Text(item.description)
-                .padding()
+                .padding(9)
                 .font(Font.system(size: 15))
+                
                 
             Button(action: {
                 self.order.add(item: self.item)
